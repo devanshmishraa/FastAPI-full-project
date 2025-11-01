@@ -1,0 +1,47 @@
+# --- Python ---
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.sqlite3
+
+# --- Virtual Environment ---
+.venv/
+.env/
+.envrc
+*.env
+
+# --- IDE / Editor ---
+.vscode/
+.idea/
+*.code-workspace
+
+# --- OS Files ---
+.DS_Store
+Thumbs.db
+
+# --- Streamlit ---
+.streamlit/secrets.toml
+
+# --- Logs / Outputs ---
+logs/
+*.log
+
+# --- Data / Temp ---
+*.csv
+*.parquet
+*.xlsx
+*.pdf
+tmp/
+data/
+uploads/
+
+# --- Jupyter / Notebooks ---
+.ipynb_checkpoints/
+
+# --- Cache ---
+.cache/
+
+# ---general---
+.intro.txt
+
