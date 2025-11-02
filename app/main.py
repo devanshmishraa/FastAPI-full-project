@@ -13,6 +13,7 @@ class Post(BaseModel):
 	rating: Optional[int] = None
 
 
+
 my_posts = [
   {"title": "Introduction to FinTech", "content": "Overview of FinTech innovations and applications.", "id": 1},
   {"title": "AI in Finance", "content": "How AI is transforming financial decision-making.", "id": 2},
@@ -31,11 +32,10 @@ def find_post(id):
 		if p["id"]==id:
 			return p
 		
-def remove_post(id):
+def find_index(id):
 	for i, post in enumerate(my_posts):
 		if post["id"]==id:
-			removed_post = my_posts.pop(i)
-			return removed_post
+			return i
 	return None
 
 @app.get("/login") #this decorator turn this into an actual path operaion. / is the root path 
@@ -67,9 +67,10 @@ def get_latest_post():
 
 @app.delete("/posts/{id}", status_code=status.HTTP_204_NO_CONTENT)
 def delete_post(id:int ):
-	post = remove_post(id)
-	if not post:
+	index = find_index(id)
+	if index == None:
 		raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"post with the id {id} not found")
+	my_posts.pop(index)
 	return Response(status_code=status.HTTP_204_NO_CONTENT)
 	
 
@@ -85,5 +86,16 @@ def get_post(id:int):
 
 	print(type(id))
 	return {"post_detail": post}
+
+@app.put("/posts/{id}")
+def update_post(id:int, post:Post):
+	index = find_index(id)
+	if not index:
+		raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"Post with id {id} does not exist")
+	post_dict = post.dict()
+	post_dict['id'] = id
+	my_posts[index] = post_dict
+	return{'data':post_dict}
+
 
 			
